@@ -1,29 +1,12 @@
 import got from 'got'
 import * as Koa from 'koa'
 
+import { getNewsList } from './requests/getNewsList'
+
 const app = new Koa()
 
 app.use(async ctx => {
-    ctx.body = await got
-        .post('http://appapi2.gamersky.com/v5/getAppNewsList', {
-            body: JSON.stringify({
-                app: 'GSAPP',
-                deviceType: 'GM1910',
-                appVersion: '5.2.23',
-                os: '',
-                osVersion: '10',
-                deviceId: null,
-                request: {
-                    nodeIds: '',
-                    pageIndex: 1,
-                    topicIds: '2',
-                    pageSize: 10,
-                    cacheMinutes: '2',
-                    order: 'timeDesc',
-                },
-            }),
-        })
-        .json()
+    ctx.body = await getNewsList().json()
 })
 
 app.listen('5555', () => {
